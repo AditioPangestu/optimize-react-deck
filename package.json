@@ -8,7 +8,12 @@
   },
   "devDependencies": {
     "code-surfer": "3.1.0",
-    "mdx-deck": "3.0.13"
+    "mdx-deck": "3.0.13",
+    "prettier": "2.3.2"
   },
-  "name": "optimize-react-deck"
+  "name": "optimize-react-deck",
+  "dependencies": {
+    "@code-surfer/themes": "^3.1.1",
+    "@theme-ui/components": "^0.2.50"
+  }
 }

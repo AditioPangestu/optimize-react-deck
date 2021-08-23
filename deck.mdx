@@ -3,13 +3,51 @@ import {
   CodeSurferColumns,
   Step,
 } from "code-surfer";
-import { github, vsDark } from "@code-surfer/themes";
+import { github, dracula } from "@code-surfer/themes";
+import { Image } from "theme-ui";
+import { FirstDefaultContainer } from "./src/first-default";
+import { SecondDefaultContainer } from "./src/second-default";
+import { Layout } from "./src/layout";
+import reconciliationImage from "./images/reconciliation.png";
 
-export const theme = vsDark;
+export const theme = github;
 
-# Hello 👋
+### Optimize React Performance without using memo()
 
-You are using [MDX Deck](https://github.com/jxnblk/mdx-deck) and [Code Surfer](https://codesurfer.pomb.us)
+A natural consequence of React composition model
+
+---
+
+<Layout>
+
+### Why do we care about performance ?
+
+- Your probably work on a **really fast** and **fancy** computer
+- The majority of users do not, and they will notice performance differences
+
+</Layout>
+
+---
+
+<Layout>
+
+### React is Fast!
+
+but reconciliation of the virtual DOM is expensive
+
+</Layout>
+
+---
+
+<img src={reconciliationImage} />
+
+---
+
+<FirstDefaultContainer />
+
+---
+
+<SecondDefaultContainer />
 
 ---
 
@@ -98,12 +136,12 @@ function incididunt(ipsum, ut = 1) {
 
 ---
 
-<CodeSurferColumns themes={[vsDark, github]}>
+<CodeSurferColumns themes={[dracula, github]}>
 
 <Step>
 
 ```js
-const magna = aliqua => aliqua.ut((enim, ad) => enim, 0);
+const magna = (aliqua) => aliqua.ut((enim, ad) => enim, 0);
 ```
 
 ```js
@@ -125,7 +163,7 @@ const lorem = (ipsum, dolor, sit) => {
   );
 };
 
-const magna = aliqua => aliqua.ut((enim, ad) => enim, 0);
+const magna = (aliqua) => aliqua.ut((enim, ad) => enim, 0);
 ```
 
 ```js
