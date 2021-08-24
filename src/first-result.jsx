@@ -17,7 +17,7 @@ const selectStyle = {
   margin: "20px 0px",
 };
 
-export function FirstResult() {
+export function App() {
   return (
     <Box style={boxStyle}>
       <RenderCounter />

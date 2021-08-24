@@ -17,7 +17,7 @@ const selectStyle = {
   margin: "20px 0px",
 };
 
-export function SecondResult() {
+export function App() {
   const [color, setColor] = useState("primary");
   function changeColor(event) {
     event.preventDefault();

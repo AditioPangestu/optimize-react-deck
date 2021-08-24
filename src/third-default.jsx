@@ -19,7 +19,7 @@ const selectStyle = {
   margin: "20px 0px",
 };
 
-export function ThirdDefault() {
+export function App() {
   const [color, setColor] = useState("primary");
   function changeColor(event) {
     event.preventDefault();

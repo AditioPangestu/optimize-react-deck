@@ -17,7 +17,7 @@ const selectStyle = {
   margin: "20px 0px",
 };
 
-export function FirstDefault() {
+export function App() {
   const [color, setColor] = useState("primary");
   function changeColor(event) {
     event.preventDefault();
@@ -27,10 +27,10 @@ export function FirstDefault() {
     color,
     changeColor,
   };
-  return <FirstDefaultView {...props} />;
+  return <AppView {...props} />;
 }
 
-function FirstDefaultView({ color, changeColor }) {
+function AppView({ color, changeColor }) {
   return (
     <Box style={boxStyle}>
       <RenderCounter />

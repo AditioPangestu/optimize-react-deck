@@ -19,7 +19,7 @@ const selectStyle = {
   margin: "20px 0px",
 };
 
-export function ThirdResult() {
+export function App() {
   return (
     <ColorLayout>
       <RenderCounter />
