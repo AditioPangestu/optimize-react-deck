@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import React, { useState } from "react";
 import { jsx } from "theme-ui";
-import { Select, Box } from "@theme-ui/components";
+import { Select, Box, Text } from "@theme-ui/components";
 import { RenderCounter } from "./render-counter";
 
 const boxStyle = {
@@ -17,23 +17,23 @@ const selectStyle = {
   margin: "20px 0px",
 };
 
-export function FirstDefault() {
+export function FirstResult() {
+  return (
+    <Box style={boxStyle}>
+      <RenderCounter />
+      <ColorPicker />
+    </Box>
+  );
+}
+
+function ColorPicker() {
   const [color, setColor] = useState("primary");
   function changeColor(event) {
     event.preventDefault();
     setColor(event.target.value);
   }
-  const props = {
-    color,
-    changeColor,
-  };
-  return <FirstDefaultView {...props} />;
-}
-
-function FirstDefaultView({ color, changeColor }) {
   return (
-    <Box style={boxStyle}>
-      <RenderCounter />
+    <>
       <Select
         value={color}
         onChange={changeColor}
@@ -46,6 +46,6 @@ function FirstDefaultView({ color, changeColor }) {
         sx={{ bg: color }}
         style={{ width: 300, height: 30, borderRadius: 10 }}
       />
-    </Box>
+    </>
   );
 }

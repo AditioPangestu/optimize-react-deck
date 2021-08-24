@@ -5,22 +5,30 @@ import {
 } from "code-surfer";
 import { github, dracula } from "@code-surfer/themes";
 import { Image } from "theme-ui";
-import { FirstDefaultContainer } from "./src/first-default";
-import { SecondDefaultContainer } from "./src/second-default";
+import { FirstDefault } from "./src/first-default";
+import { FirstResult } from "./src/first-result";
+import { SecondDefault } from "./src/second-default";
+import { SecondResult } from "./src/second-result";
+import { ThirdDefault } from "./src/third-default";
+import { ThirdResult } from "./src/third-result";
+import {
+  ComponentA,
+  SlowComponentA,
+} from "./src/rendering";
 import { Layout } from "./src/layout";
 import reconciliationImage from "./images/reconciliation.png";
+import responseTimeImage from "./images/response-time.svg";
+import putStateImage from "./images/put-state.svg";
 
 export const theme = github;
 
-### Optimize React Performance without using memo()
-
-A natural consequence of React composition model
+##### Optimize React Performance without using memo()
 
 ---
 
 <Layout>
 
-### Why do we care about performance ?
+##### Why do we care about performance ?
 
 - Your probably work on a **really fast** and **fancy** computer
 - The majority of users do not, and they will notice performance differences
@@ -31,7 +39,7 @@ A natural consequence of React composition model
 
 <Layout>
 
-### React is Fast!
+##### React is Fast!
 
 but reconciliation of the virtual DOM is expensive
 
@@ -43,141 +51,44 @@ but reconciliation of the virtual DOM is expensive
 
 ---
 
-<FirstDefaultContainer />
+<CodeSurferColumns sizes={[1, 1]}>
 
----
+<Step title="React Re-render" subtitle="Component A">
 
-<SecondDefaultContainer />
+<ComponentA />
 
----
+```jsx 35:52 file=./src/rendering.jsx
 
-<CodeSurfer>
-
-```js title="This is a title" subtitle="and this a subtitle"
-function lorem(ipsum, dolor = 1) {
-  const sit = ipsum == null ? 0 : ipsum.sit;
-  dolor = sit - amet(dolor);
-  return sit
-    ? consectetur(ipsum, 0, dolor < 0 ? 0 : dolor)
-    : [];
-}
-
-function incididunt(ipsum, ut = 1) {
-  ut = labore.et(amet(ut), 0);
-  const sit = ipsum == null ? 0 : ipsum.sit;
-
-  if (!sit || ut < 1) {
-    return [];
-  }
-
-  let dolore = 0;
-  let magna = 0;
-  const aliqua = new eiusmod(labore.ut(sit / ut));
-
-  while (dolore < sit) {
-    aliqua[magna++] = consectetur(
-      ipsum,
-      dolore,
-      (dolore += ut)
-    );
-  }
-
-  return aliqua;
-}
-```
-
-```js
-function lorem(ipsum, dolor = 1) {
-  const sit = ipsum == null ? 0 : ipsum.sit;
-  dolor = sit - amet(dolor);
-  return sit
-    ? consectetur(ipsum, 0, dolor < 0 ? 0 : dolor)
-    : [];
-}
-
-function adipiscing(...elit) {
-  if (!elit.sit) {
-    return [];
-  }
-
-  const sed = elit[0];
-  return eiusmod.tempor(sed) ? sed : [sed];
-}
-
-function incididunt(ipsum, ut = 1) {
-  ut = labore.et(amet(ut), 0);
-  const sit = ipsum == null ? 0 : ipsum.sit;
-
-  if (!sit || ut < 1) {
-    return [];
-  }
-
-  let dolore = 0;
-  let magna = 0;
-  const aliqua = new eiusmod(labore.ut(sit / ut));
-
-  while (dolore < sit) {
-    aliqua[magna++] = consectetur(
-      ipsum,
-      dolore,
-      (dolore += ut)
-    );
-  }
-
-  return aliqua;
-}
-```
-
-```diff 1[10:14],2[15:19],3[22:27],10:12
-
-```
-
-</CodeSurfer>
-
----
-
-<CodeSurferColumns themes={[dracula, github]}>
-
-<Step>
-
-```js
-const magna = (aliqua) => aliqua.ut((enim, ad) => enim, 0);
-```
-
-```js
-const minim = (ad, enim) => dolore.magna(ad / enim);
 ```
 
 </Step>
 
-<Step>
+<Step title="React Re-render" subtitle="Component B">
 
-```js
-const lorem = (ipsum, dolor, sit) => {
-  const amet = dolor - ipsum;
-  return consectetur.adipiscing(
-    {
-      elit: sed.eiusmod(sit - dolor) / amet + 2,
-    },
-    (tempor, incididunt) => ipsum + amet * incididunt
-  );
-};
+<ComponentA />
 
-const magna = (aliqua) => aliqua.ut((enim, ad) => enim, 0);
+```jsx 73:93 file=./src/rendering.jsx
+
 ```
 
-```js
-const minim = (ad, enim) => dolore.magna(ad / enim);
+</Step>
 
-const sed = (eiusmod, tempor, incididunt) => {
-  const ut = tempor - eiusmod;
-  return labore.et(
-    {
-      amet: dolore.magna(incididunt - tempor) / ut + 2,
-    },
-    (aliqua, elit) => eiusmod + ut * elit
-  );
-};
+<Step title="React Re-render" subtitle="Render Counter">
+
+<ComponentA />
+
+```jsx 6:25 file=./src/render-counter.jsx
+
+```
+
+</Step>
+
+<Step title="React Re-render" subtitle="Slow Component">
+
+<SlowComponentA />
+
+```jsx 135:155 file=./src/rendering.jsx
+
 ```
 
 </Step>
@@ -186,5 +97,95 @@ const sed = (eiusmod, tempor, incididunt) => {
 
 ---
 
-docs:  
-[codesurfer.pomb.us](https://codesurfer.pomb.us)
+##### Response Time
+
+<img src={responseTimeImage} height="650px" width="650px" />
+
+---
+
+##### How to Optimize It
+
+Try fix the slow render **before** you fix unnecessary re-renders
+
+---
+
+##### Fix unnecessary re-renders (in general)
+
+<img src={putStateImage} height="650px" width="650px" />
+
+---
+
+<CodeSurferColumns sizes={[1, 2]}>
+
+<Step title="First Problem: Container & View" subtitle="The Container">
+
+<FirstDefault />
+
+```jsx 20:31 file=./src/first-default.jsx
+
+```
+
+</Step>
+
+<Step title="First Problem: Container & View" subtitle="The View">
+
+<FirstDefault />
+
+```jsx 33:51 file=./src/first-default.jsx
+
+```
+
+</Step>
+
+<Step title="First Solution: Container & View" subtitle="Put state in the component that needs it.">
+
+<FirstResult />
+
+```jsx 29:47 file=./src/first-result.jsx
+
+```
+
+</Step>
+
+<Step title="First Solution: Container & View" subtitle="Do child components need the data too? Pass it down.">
+
+<FirstResult />
+
+```jsx 45:48 file=./src/first-result.jsx
+
+```
+
+</Step>
+
+<Step title="First Solution: Container & View">
+
+<FirstResult />
+
+```jsx 20:27 file=./src/first-result.jsx
+
+```
+
+</Step>
+
+<Step title="Second Problem: Lift State Up">
+
+<SecondDefault />
+
+```jsx 20:28 file=./src/second-default.jsx
+
+```
+
+</Step>
+
+</CodeSurferColumns>
+
+---
+
+- https://overreacted.io/before-you-memo/
+- https://kentcdodds.com/blog/optimize-react-re-renders
+- https://almerosteyn.com/2017/11/id24-accessible-react-tips-tools-tricks#/22
+- https://hero35.com/react-day-berlin/2019/performance-anxiety-with-react
+- https://alexsidorenko.com/blog/react-render-always-rerenders/
+- https://blog.isquaredsoftware.com/2020/05/blogged-answers-a-mostly-complete-guide-to-react-rendering-behavior/
+- https://kentcdodds.com/blog/fix-the-slow-render-before-you-fix-the-re-render
+- https://www.allhandsontech.com/programming/react/react-state-management-8-helpful-tips/
