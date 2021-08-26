@@ -1,4 +1,4 @@
-# MDX Deck + Code Surfer template
+# Optimize React Performance without using memo()
 
 This project was generated with the `npm init code-surfer-deck` command.
 
@@ -7,7 +7,7 @@ This project was generated with the `npm init code-surfer-deck` command.
 To run the presentation deck in development mode:
 
 ```sh
-npm start
+yarn && yarn start
 ```
 
 Edit the [`deck.mdx`](deck.mdx) file to get started.
@@ -17,7 +17,7 @@ Edit the [`deck.mdx`](deck.mdx) file to get started.
 To build the presentation deck:
 
 ```sh
-npm run build
+yarn && yarn run build
 ```
 
 For more documentation see [MDX Deck](https://github.com/jxnblk/mdx-deck) and [Code Surfer](https://codesurfer.pomb.us/)
