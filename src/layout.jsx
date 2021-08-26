@@ -5,14 +5,14 @@ import { jsx, Box } from "theme-ui";
 export function Layout({ children }) {
 	return (
 		<Box
+      style={{
+        width: '100vw',
+        height: '100vh',
+      }}
       sx={{
-				w: '100vw',
-				h: '100vh',
-        py: 4,
+        py: 5,
         px: 6,
         display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
 				flexDirection: 'column',
       }}
     >{children}</Box>
