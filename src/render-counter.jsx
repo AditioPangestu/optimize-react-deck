@@ -6,7 +6,7 @@ import { Text } from "@theme-ui/components";
 export function RenderCounter() {
   const countRef = useRef(1);
   const [, setTrigger] = useState(0);
-  useEffect(() => () => (countRef.current += 1));
+  useEffect(() => { countRef.current += 1 });
   return (
     <Text
       sx={{
