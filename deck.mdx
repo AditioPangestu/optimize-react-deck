@@ -4,7 +4,7 @@ import {
   Step,
 } from "code-surfer";
 import { github, dracula } from "@code-surfer/themes";
-import { Image } from "theme-ui";
+import { Box } from "@theme-ui/components";
 import { App as FirstDefault } from "./src/first-default";
 import { App as FirstResult } from "./src/first-result";
 import { App as SecondDefault } from "./src/second-default";
@@ -14,6 +14,7 @@ import { App as ThirdResult } from "./src/third-result";
 import {
   ComponentA,
   SlowComponentA,
+  MemoizedSlowComponentA,
 } from "./src/rendering";
 import { Layout } from "./src/layout";
 import reconciliationImage from "./images/reconciliation.png";
@@ -51,6 +52,25 @@ but reconciliation of the virtual DOM is expensive
 
 ---
 
+<Layout>
+
+##### React Re-render
+
+There are four events that cause a React component to re-render:
+
+<Box style={{ width: '100%' }}>
+
+1. State change
+2. Prop change
+3. Parent render
+4. Context change
+
+</Box>
+
+</Layout>
+
+---
+
 <CodeSurferColumns sizes={[1, 1]}>
 
 <Step title="React Re-render" subtitle="Component A">
@@ -67,7 +87,7 @@ but reconciliation of the virtual DOM is expensive
 
 <ComponentA />
 
-```jsx 73:93 file=./src/rendering.jsx
+```jsx 92:112 file=./src/rendering.jsx
 
 ```
 
@@ -83,11 +103,17 @@ but reconciliation of the virtual DOM is expensive
 
 </Step>
 
-<Step title="React Re-render" subtitle="Slow Component">
+</CodeSurferColumns>
+
+---
+
+<CodeSurferColumns sizes={[1, 1]}>
+
+<Step title="Slow Component">
 
 <SlowComponentA />
 
-```jsx 135:155 file=./src/rendering.jsx
+```jsx 176:196 file=./src/rendering.jsx
 
 ```
 
@@ -103,9 +129,37 @@ but reconciliation of the virtual DOM is expensive
 
 ---
 
-##### How to Optimize It
+<CodeSurferColumns sizes={[1, 1]}>
 
-Try fix the slow render **before** you fix unnecessary re-renders
+<Step title="Using memo()">
+
+<MemoizedSlowComponentA />
+
+```jsx 176:201 file=./src/rendering.jsx
+
+```
+
+</Step>
+
+</CodeSurferColumns>
+
+---
+
+<Layout>
+
+##### Why you should not use memo()
+
+- You need to take precautions when memoizing components that use props as function or object
+- By default, it will only compare complex objects in the props object shallowly
+- You can also provide a custom comparison function, but when there are new props, you must update the function
+
+</Layout>
+
+---
+
+##### How to optimize without using memo()
+
+Try to fix the slow render **before** you fix unnecessary re-renders
 
 ---
 
@@ -177,15 +231,85 @@ Try fix the slow render **before** you fix unnecessary re-renders
 
 </Step>
 
+<Step title="Second Solution: Lift State Up" subtitle="Do parents need it? Lift state up.">
+
+<SecondResult />
+
+```jsx 20:36 file=./src/second-result.jsx
+
+```
+
+</Step>
+
+<Step title="Third Problem: Lift Content Up">
+
+<ThirdDefault />
+
+```jsx 22:41 file=./src/third-default.jsx
+
+```
+
+</Step>
+
+<Step title="Third Solution: Lift Content Up" subtitle="Use React composition model">
+
+<ThirdResult />
+
+```jsx 30:49 file=./src/third-result.jsx
+
+```
+
+</Step>
+
+<Step title="Third Solution: Lift Content Up" subtitle="Use React composition model">
+
+<ThirdResult />
+
+```jsx 22:28 file=./src/third-result.jsx
+
+```
+
+</Step>
+
 </CodeSurferColumns>
 
 ---
 
-- https://overreacted.io/before-you-memo/
-- https://kentcdodds.com/blog/optimize-react-re-renders
-- https://almerosteyn.com/2017/11/id24-accessible-react-tips-tools-tricks#/22
-- https://hero35.com/react-day-berlin/2019/performance-anxiety-with-react
-- https://alexsidorenko.com/blog/react-render-always-rerenders/
+#### What’s the moral?
+
+Split the parts that **change** from the parts that **don’t change**!
+
+---
+
+<Layout>
+
+#### About Using React composition model?
+
+The model unlocks more performance benefits in the future
+
+For example, when [Server Components](https://reactjs.org/blog/2020/12/21/data-fetching-with-react-server-components.html) are stable and ready for adoption, our ColorLayout component could receive its children [from the server](https://www.youtube.com/watch?v=TQQPAU21ZUw&t=1314s).
+
+</Layout>
+
+---
+
+#### Another Problem
+
+https://blog.goncharov.page/react-lifting-state-up-is-killing-your-app
+
+---
+
+#### References
+
+<Box style={{ fontSize: '24px' }}>
+
 - https://blog.isquaredsoftware.com/2020/05/blogged-answers-a-mostly-complete-guide-to-react-rendering-behavior/
-- https://kentcdodds.com/blog/fix-the-slow-render-before-you-fix-the-re-render
 - https://www.allhandsontech.com/programming/react/react-state-management-8-helpful-tips/
+- https://overreacted.io/before-you-memo/
+- https://kentcdodds.com/blog/fix-the-slow-render-before-you-fix-the-re-render
+- https://kentcdodds.com/blog/optimize-react-re-renders
+- https://alexsidorenko.com/blog/react-render-always-rerenders/
+- https://hero35.com/react-day-berlin/2019/performance-anxiety-with-react
+- https://almerosteyn.com/2017/11/id24-accessible-react-tips-tools-tricks#/22
+
+</Box>

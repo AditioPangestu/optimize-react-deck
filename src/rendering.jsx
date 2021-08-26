@@ -15,7 +15,7 @@ const boxStyle = {
 };
 
 const buttonStyle = {
-  fontSize: 20,
+  fontSize: 20, cursor: 'pointer',
   backgroundColor: "black",
   marginTop: 5,
 };
@@ -70,6 +70,25 @@ export function SlowComponentA() {
   );
 }
 
+export function MemoizedSlowComponentA() {
+  const [counter, setCounter] = useState(0);
+  return (
+    <Box style={boxStyle} sx={boxSX}>
+      <Text sx={textSX}>Component A</Text>
+      <RenderCounter />
+      <Button
+        style={buttonStyle}
+        onClick={() =>
+          setCounter((oldcounter) => oldcounter + 1)
+        }
+      >
+        Counter: {counter}
+      </Button>
+      <MemoizedSlowComponentB />
+    </Box>
+  );
+}
+
 function ComponentB() {
   const [counter, setCounter] = useState(0);
   return (
@@ -108,6 +127,28 @@ function SlowComponentB() {
       </Button>
       <Box style={{ ...boxStyle, flexDirection: "row" }}>
         <SlowComponentC />
+        <ComponentD />
+      </Box>
+    </Box>
+  );
+}
+
+function MemoizedSlowComponentB() {
+  const [counter, setCounter] = useState(0);
+  return (
+    <Box style={boxStyle} sx={boxSX}>
+      <Text sx={textSX}>Component B</Text>
+      <RenderCounter />
+      <Button
+        style={buttonStyle}
+        onClick={() =>
+          setCounter((oldcounter) => oldcounter + 1)
+        }
+      >
+        Counter: {counter}
+      </Button>
+      <Box style={{ ...boxStyle, flexDirection: "row" }}>
+        <MemoizedSlowComponentC />
         <ComponentD />
       </Box>
     </Box>
@@ -153,6 +194,11 @@ function SlowComponentC() {
     </Box>
   );
 }
+
+const MemoizedSlowComponentC = React.memo(SlowComponentC);
+
+MemoizedSlowComponentC.displayName =
+  "MemoizedSlowComponentC";
 
 function ComponentD() {
   const [counter, setCounter] = useState(0);
